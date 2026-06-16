@@ -22,6 +22,6 @@ This is an **activity/project** to demonstrate real-time data visualization and 
 
 ## 🚀 Live Demo
 
-🔗 [View Demo]()
+🔗 [View Demo](https://kinglyvillamor.github.io/AnalyTiX/)
 
 ## 📁 Project Structure
