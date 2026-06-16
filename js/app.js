@@ -13,26 +13,19 @@
  */
 
 const app = Vue.createApp({
-    /**
-     * ==========================================
-     * DATA - Application State
-     * ==========================================
-     */
+
     data() {
         return {
-            // ---------- KPI Stats ----------
             visitors: 12453,
             conversion: 8.2,
             bounce: 34.6,
             revenue: 28490,
             
-            // ---------- Previous Values (for change calculation) ----------
             prevVisitors: 12453,
             prevConversion: 8.2,
             prevBounce: 34.6,
             prevRevenue: 28490,
             
-            // ---------- Chart Data ----------
             chartData: [
                 { label: 'M', value: 45 },
                 { label: 'T', value: 70 },
@@ -43,7 +36,6 @@ const app = Vue.createApp({
                 { label: 'S', value: 40 }
             ],
             
-            // ---------- Activity Feed ----------
             activities: [
                 { id: 1, icon: 'fas fa-user-plus', title: 'New Sign-up', desc: 'alex@email.com', time: 'now' },
                 { id: 2, icon: 'fas fa-shopping-cart', title: 'Purchase', desc: 'Pro Plan', time: '1m' },
@@ -51,7 +43,6 @@ const app = Vue.createApp({
                 { id: 4, icon: 'fas fa-star', title: 'Review', desc: '5 stars ⭐', time: '8m' }
             ],
             
-            // ---------- Transactions ----------
             transactions: [
                 { id: 1, user: 'Emma Wilson', plan: 'Pro', amount: 49, status: 'Completed', statusClass: 'completed' },
                 { id: 2, user: 'James Rodriguez', plan: 'Basic', amount: 19, status: 'Pending', statusClass: 'pending' },
@@ -59,7 +50,6 @@ const app = Vue.createApp({
                 { id: 4, user: 'Liam Chen', plan: 'Pro', amount: 49, status: 'Refunded', statusClass: 'refunded' }
             ],
             
-            // ---------- UI State ----------
             currentTime: '',
             statusText: 'Connected',
             connected: true
@@ -68,31 +58,28 @@ const app = Vue.createApp({
     
     computed: {
         /**
-         * Calculate percentage change for visitors
-         * @returns {string} Formatted percentage change
+         * @returns {string} 
          */
         changeVisitors() {
             return ((this.visitors - this.prevVisitors) / this.prevVisitors * 100).toFixed(1);
         },
         
         /**
-         * Calculate percentage change for conversion
-         * @returns {string} Formatted percentage change
+         * @returns {string} 
          */
         conversionChange() {
             return ((this.conversion - this.prevConversion) / this.prevConversion * 100).toFixed(1);
         },
         
         /**
-         * Calculate percentage change for bounce rate
-         * @returns {string} Formatted percentage change
+         * @returns {string} 
          */
         bounceChange() {
             return ((this.bounce - this.prevBounce) / this.prevBounce * 100).toFixed(1);
         },
         
         /**
-         * @returns {string} Formatted percentage change
+         * @returns {string} 
          */
         changeRevenue() {
             return ((this.revenue - this.prevRevenue) / this.prevRevenue * 100).toFixed(1);
