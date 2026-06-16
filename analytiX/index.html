@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>analyTiX Dashboard</title>
+    
+    <!-- External Resources -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="../analytiX/css/style.css">
+</head>
+<body>
+    <div class="dashboard" id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <i class="fas fa-square"></i>analytix<span>.</span>
+                </div>
+                <div class="live-indicator">
+                    <span class="dot"></span>
+                    LIVE
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="status">
+                    <span class="dot" :class="{ offline: !connected }"></span>
+                    {{ statusText }}
+                </div>
+                <div class="clock">
+                    <i class="far fa-clock"></i>
+                    {{ currentTime }}
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-icon"><i class="fas fa-users"></i></span>
+                <div class="stat-label">Total Visitors</div>
+                <div class="stat-value">{{ visitors }}</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up" style="font-size: 10px;"></i>
+                    {{ changeVisitors }}%
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-icon"><i class="fas fa-chart-simple"></i></span>
+                <div class="stat-label">Conversion</div>
+                <div class="stat-value">{{ conversion }}%</div>
+                <div class="stat-change" :class="conversionChange >= 0 ? 'positive' : 'negative'">
+                    <i class="fas" :class="conversionChange >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'" style="font-size: 10px;"></i>
+                    {{ Math.abs(conversionChange) }}%
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-icon"><i class="fas fa-arrow-right"></i></span>
+                <div class="stat-label">Bounce Rate</div>
+                <div class="stat-value">{{ bounce }}%</div>
+                <div class="stat-change" :class="bounceChange <= 0 ? 'positive' : 'negative'">
+                    <i class="fas" :class="bounceChange <= 0 ? 'fa-arrow-down' : 'fa-arrow-up'" style="font-size: 10px;"></i>
+                    {{ Math.abs(bounceChange) }}%
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-icon"><i class="fas fa-dollar-sign"></i></span>
+                <div class="stat-label">Revenue</div>
+                <div class="stat-value">${{ revenue }}</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up" style="font-size: 10px;"></i>
+                    {{ changeRevenue }}%
+                </div>
+            </div>
+        </section>
+
+        <!-- Middle Row: Chart & Activity -->
+        <div class="middle-row">
+            <!-- Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="far fa-calendar-alt" style="margin-right: 8px;"></i>Weekly Activity</h2>
+                    <span class="badge">+12%</span>
+                </div>
+                <div class="bar-chart">
+                    <div class="bar-item" v-for="day in chartData" :key="day.label">
+                        <div class="bar" :style="{ height: day.value + '%' }"></div>
+                        <span class="bar-label">{{ day.label }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Activity Feed -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="far fa-bolt" style="margin-right: 8px;"></i>Live Feed</h2>
+                    <span class="badge">{{ activities.length }} events</span>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item" v-for="activity in activities" :key="activity.id">
+                        <div class="activity-icon">
+                            <i :class="activity.icon"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="title">{{ activity.title }}</div>
+                            <div class="desc">{{ activity.desc }}</div>
+                        </div>
+                        <div class="activity-time">{{ activity.time }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions Table -->
+        <div class="table-wrap">
+            <div class="card-header">
+                <h2><i class="far fa-list-alt" style="margin-right: 8px;"></i>Recent Transactions</h2>
+                <span class="badge">auto-updated</span>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Plan</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="transaction in transactions" :key="transaction.id">
+                        <td><strong>{{ transaction.user }}</strong></td>
+                        <td>{{ transaction.plan }}</td>
+                        <td>${{ transaction.amount }}</td>
+                        <td>
+                            <span class="status-badge" :class="transaction.statusClass">
+                                {{ transaction.status }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+    
+    <!-- Main Application Script -->
+    <script src="../analytiX/js/app.js"></script>
+</body>
+</html>
